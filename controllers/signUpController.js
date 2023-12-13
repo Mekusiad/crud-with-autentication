@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
@@ -32,15 +32,15 @@ export const signUpController = async (req, res) => {
 
   const salt = bcrypt.genSaltSync(10);
   const hashPassword = bcrypt.hashSync(password, salt);
-  const jwToken = jwt.sign({ email: email }, process.env.JWT_KEY, {
-    expiresIn: "0.5h",
-  });
+  // const jwToken = jwt.sign({ email: email }, process.env.JWT_KEY, {
+  //   expiresIn: "0.5h",
+  // });
 
   const user = {
     _id: uuidv4(),
     name: name,
     email: email,
-    token: jwToken,
+    // token: jwToken,
     password: hashPassword,
     created_at: new Date(),
     updated_at: new Date(),

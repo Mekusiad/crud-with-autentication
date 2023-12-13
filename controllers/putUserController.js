@@ -6,7 +6,7 @@ export const putUserController = async (req, res) => {
   try {
     const user = await User.updateOne(
       { _id: res.user.id },
-      { $set: { email: email } }
+      { $set: { email: email, updated_at: new Date() } }
     );
 
     return res

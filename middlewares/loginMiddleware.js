@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 import { User } from "../models/User.js";
 
 export const loginMiddleware = async (req, res, next) => {
@@ -10,14 +12,21 @@ export const loginMiddleware = async (req, res, next) => {
 
   try {
     const userExist = await User.findOne({ email: email });
-    req.user = userExist;
+
     if (!userExist)
       return res.status(401).json({
         message: "Login e-ou senha inválido, tente novamente!!!",
       });
+    req.user = userExist;
+    const isEqual = await bcrypt.compare(password, req.user.password);
+
+    if (!isEqual)
+      return res
+        .status(401)
+        .json({ message: "Login e-ou senha inválido, tente novamente!!!" });
+
+    next();
   } catch (erro) {
     return res.status(400).json({ error: erro.message });
   }
-
-  next();
 };
