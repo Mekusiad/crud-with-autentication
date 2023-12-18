@@ -1,6 +1,8 @@
 import express from "express";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 
+import { Database } from "./database/index.js";
 import { signUp } from "./routes/signUp.js";
 import { login } from "./routes/login.js";
 import { getUsers } from "./routes/getUsers.js";
@@ -8,9 +10,12 @@ import { getUser } from "./routes/getUser.js";
 import { putUser } from "./routes/putUser.js";
 import { deleteUser } from "./routes/deleteUser.js";
 
-export const app = express();
+dotenv.config();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+export const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -49,4 +54,9 @@ app.use((error, req, res) => {
   res.status(error.status || 500);
 
   return res.send({ message: error.message });
+});
+
+app.listen(port, () => {
+  Database();
+  console.log(`Server is running on port ${port}`);
 });
