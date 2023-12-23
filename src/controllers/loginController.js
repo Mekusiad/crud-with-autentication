@@ -16,5 +16,5 @@ export const loginController = async (req, res) => {
     { $set: { token: jwToken, last_login: new Date() } }
   );
 
-  return res.status(200).json({ message: "Usuário logado com sucesso!!!" });
+  return res.status(200).json({ message: "Usuário logado com sucesso!!!",token: JSON.stringify(jwToken)});
 };

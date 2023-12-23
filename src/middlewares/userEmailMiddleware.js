@@ -8,7 +8,7 @@ export const userEmailMiddleware = async (req, res, next) => {
   if (userExist && userExist.email)
     return res
       .status(401)
-      .json({ messagem: "Email já cadastrado, tente outro!!!" });
+      .send({ message: "Email já cadastrado, tente outro!!!" });
 
   next();
 };
